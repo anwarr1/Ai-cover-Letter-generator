@@ -1,3 +1,4 @@
+import 'package:cover_letter_generator/Screens/HomeScreen.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -16,17 +17,17 @@ class LoginForm extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Username',
                   style: TextStyle(color: Color.fromARGB(255, 152, 152, 152)),
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.005),
                 TextFormField(
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
                         vertical: height * 0, horizontal: width * 0.03),
                     labelText: 'Username',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                         fontSize: 13,
                         color: Color.fromARGB(255, 157, 157, 157)),
                     enabledBorder: OutlineInputBorder(
@@ -71,13 +72,18 @@ class LoginForm extends StatelessWidget {
           ),
           SizedBox(height: height * 0.03),
           Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: width * 0.65,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const HomeScreen();
+                      },
+                    ));
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
                     padding: EdgeInsets.symmetric(
@@ -97,16 +103,23 @@ class LoginForm extends StatelessWidget {
                 'Forgot Password ?',
                 style: TextStyle(fontSize: 12),
               ),
+              SizedBox(height: height * 0.01),
             ],
           ),
+          SizedBox(height: height * 0.02),
           const Text(
             'Or login with ',
             style: TextStyle(fontSize: 12),
           ),
-          const Align(
-              alignment: Alignment.bottomCenter,
-              child: Text('Don\'t have an account ?',
-                  style: TextStyle(fontSize: 12)))
+          SizedBox(height: height * 0.02),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.facebook),
+              SizedBox(width: width * 0.03),
+              const Icon(Icons.facebook)
+            ],
+          )
         ],
       ),
     );
