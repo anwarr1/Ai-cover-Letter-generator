@@ -4,9 +4,14 @@ import 'package:cover_letter_generator/utils/form_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -26,12 +31,20 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: FloatingActionButton(
             backgroundColor: primaryColor,
             shape: const CircleBorder(),
             onPressed: () {
-              showModal(context);
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: primaryColor,
+                builder: (BuildContext context) {
+                  return LayoutBuilder(
+                      builder: (context, constraints) =>
+                          ModalContent(constraints));
+                },
+              );
             },
             child: const FaIcon(
               FontAwesomeIcons.wandMagicSparkles,
@@ -41,31 +54,28 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            // color: Colors.lightBlue,
             margin: EdgeInsets.symmetric(
               horizontal: width * 0.08,
             ),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Welcome ',
-                          style: TextStyle(color: Colors.white, fontSize: 22),
-                        ),
-                        Text(
-                          'Anwar Aammar! ',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ]),
-                ),
-                const Spacer(),
-                const Icon(
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome ',
+                        style: TextStyle(color: Colors.white, fontSize: 22),
+                      ),
+                      Text(
+                        'Anwar Aammar! ',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ]),
+                Spacer(),
+                Icon(
                   Icons.person,
                   color: Colors.white,
                   size: 40,
@@ -80,7 +90,7 @@ class HomeScreen extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -95,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                             Container(
                                 margin: EdgeInsets.only(
                                     top: constraints.maxHeight * 0.10),
-                                child: listLetters())
+                                child: listLetters()),
                           ],
                         );
                       },
@@ -106,41 +116,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Future<dynamic> showModal(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    return showModalBottomSheet(
-      // enableDrag: true,
-      // isScrollControlled: true,
-      backgroundColor: primaryColor,
-      context: context,
-      builder: (context) =>
-          //  LayoutBuilder(
-          //   builder: (context, constraints) =>
-          Column(
-        children: [
-          Container(
-            // height: constraints.maxHeight * 0.2,
-            child: Text("tet"),
-          ),
-          Form(
-            child: Column(
-              children: [
-                TextFormField(),
-                TextFormField(),
-                TextFormField(),
-                TextFormField(),
-              ],
-            ),
-          )
-        ],
-        //
-      ),
-
-      // ),
     );
   }
 }
@@ -190,7 +165,7 @@ class rowForm extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "",
               style:
                   TextStyle(fontSize: 11, color: Color.fromARGB(255, 0, 0, 0)),
@@ -215,7 +190,6 @@ class circularLetter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Column(
       children: [
         Material(
@@ -239,5 +213,145 @@ class circularLetter extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+// *************************************************************** show Modal **************************************************************
+
+class ModalContent extends StatefulWidget {
+  BoxConstraints constraints;
+  ModalContent(this.constraints);
+  @override
+  _ModalContentState createState() => _ModalContentState();
+}
+
+class _ModalContentState extends State<ModalContent> {
+  double _bottomPadding = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    var height = widget.constraints.maxHeight;
+    var width = widget.constraints.maxWidth;
+    return Container(
+      color: primaryColor,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          bottom: _bottomPadding + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            // ********************************** Stepper ******************************
+
+            Container(
+              height: height * 0.2,
+              child: Text("Custom Stepper"),
+            ),
+            Container(
+              height: height * 0.75,
+              color: const Color.fromARGB(255, 255, 255, 255),
+              child: PageView(controller: PageController(), children: [
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: const EdgeInsets.all(15),
+                      child: const Text(
+                        "Personal Information",
+                        style: TextStyle(
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                    // ********************************** Form ******************************
+                    Container(
+                        color: Colors.white,
+                        child: Form(
+                          child: Column(
+                            children: [
+                              rowForm(
+                                height: height,
+                                width: width,
+                                label1: "First Name",
+                                label2: "Last Name",
+                                widthCol1: 0.4,
+                                widthCol2: 0.4,
+                              ),
+                              SizedBox(
+                                height: height * 0.00,
+                              ),
+                              rowForm(
+                                height: height,
+                                width: width,
+                                label1: "Adress",
+                                label2: "Phone",
+                                widthCol1: 0.5,
+                                widthCol2: 0.3,
+                              ),
+                              SizedBox(
+                                height: height * 0.00,
+                              ),
+                              rowForm(
+                                height: height,
+                                width: width,
+                                label1: "Postal code",
+                                label2: "Email",
+                                widthCol1: 0.3,
+                                widthCol2: 0.5,
+                              ),
+                              SizedBox(
+                                height: height * 0.05,
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return const HomeScreen();
+                                      },
+                                    ));
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: primaryColor,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 50,
+                                        vertical: height * 0.018),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Continue',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
+                  ],
+                ),
+              ]),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _updateBottomPadding();
+    });
+  }
+
+  void _updateBottomPadding() {
+    setState(() {
+      _bottomPadding = MediaQuery.of(context).viewInsets.bottom;
+    });
   }
 }
