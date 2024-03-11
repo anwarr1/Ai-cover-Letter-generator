@@ -17,7 +17,6 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: Colors.red,
               height: height * 0.05,
             ),
             SizedBox(

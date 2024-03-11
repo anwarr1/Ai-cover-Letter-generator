@@ -37,6 +37,9 @@ dependencies:
   flutter_svg: ^2.0.9
   auto_size_text: ^3.0.0
   font_awesome_flutter: ^10.7.0
+  page_view_dot_indicator: ^2.3.0
+  easy_stepper: ^0.8.3
+  another_stepper: ^1.2.2
 
 dev_dependencies:
   flutter_test:
