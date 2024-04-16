@@ -12,7 +12,7 @@ class FormHelper {
     bool readOnly = false,
   }) {
     return TextFormField(
-      decoration: fieldDecoration(context, hintText, isRequired),
+      decoration: fieldDecoration(context, hintText),
       readOnly: readOnly,
       obscureText: obscureText,
       maxLines: !isTextArea ? 1 : 3,
@@ -26,7 +26,6 @@ class FormHelper {
   static InputDecoration fieldDecoration(
     BuildContext context,
     Widget labelWidget,
-    bool isRequired,
   ) {
     return InputDecoration(
       label: labelWidget,
@@ -139,5 +138,56 @@ class FormHelper {
             )
           : TextSpan(),
     ]));
+  }
+}
+
+class rowForm extends StatelessWidget {
+  const rowForm({
+    super.key,
+    required this.width,
+    required this.firstColumn,
+    required this.SecondColumn,
+  });
+
+  final double width;
+  final Widget firstColumn;
+  final Widget SecondColumn;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        firstColumn,
+        SizedBox(
+          width: width * 0.02,
+        ),
+        SecondColumn
+      ],
+    );
+  }
+}
+
+class InputUI extends StatelessWidget {
+  const InputUI({
+    super.key,
+    required this.width,
+    required this.hint,
+  });
+
+  final double width;
+  final Widget hint;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: width,
+        child: TextFormField(
+          decoration: FormHelper.fieldDecoration(context, hint),
+          keyboardType: TextInputType.text,
+          onChanged: (String value) {
+            // onChanged(value);
+          },
+        ));
   }
 }

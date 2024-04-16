@@ -24,38 +24,45 @@ class CompanyInfoForm extends StatelessWidget {
             ),
           ),
           // ********************************** Form ******************************
+          SizedBox(
+            height: height * 0.05,
+          ),
           Container(
               child: Form(
             child: Column(
               children: [
-                rowForm(
-                  height: height,
-                  width: width,
-                  label1: FormHelper.isInputRequired("Company Name"),
-                  label2: FormHelper.isInputRequired("Company Address"),
-                  widthCol1: 0.4,
-                  widthCol2: 0.4,
-                ),
-
-                rowForm(
-                  height: height,
-                  width: width,
-                  label1:  FormHelper.isInputRequired("Department"),
-                  label2:  FormHelper.isInputRequired("Date of letter"),
-                  widthCol1: 0.45,
-                  widthCol2: 0.35,
-                ),
-                SizedBox(
-                  height: height * 0.00,
-                ),
                 // rowForm(
                 //   height: height,
                 //   width: width,
-                //   label1: "Postal code",
-                //   label2: "Email",
-                //   widthCol1: 0.3,
-                //   widthCol2: 0.5,
+                //   label1:
+                //   label2: ,
+                //   widthCol1: 0.4,
+                //   widthCol2: 0.4,
                 // ),
+
+                rowForm(
+                  width: width,
+                  firstColumn: InputUI(
+                    width: width * 0.4,
+                    hint: FormHelper.isInputRequired("Company Name"),
+                  ),
+                  SecondColumn: InputUI(
+                      width: width * 0.4,
+                      hint: FormHelper.isInputRequired("Company Address")),
+                ),
+                SizedBox(
+                  height: height * 0.05,
+                ),
+                rowForm(
+                  width: width,
+                  firstColumn: InputUI(
+                    width: width * 0.45,
+                    hint: FormHelper.isInputRequired("Department"),
+                  ),
+                  SecondColumn: InputUI(
+                      width: width * 0.35,
+                      hint: FormHelper.isInputRequired("Company Address")),
+                ),
               ],
             ),
           ))

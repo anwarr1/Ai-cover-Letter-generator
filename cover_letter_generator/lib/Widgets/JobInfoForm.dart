@@ -24,40 +24,47 @@ class JobInfoForm extends StatelessWidget {
             ),
           ),
           // ********************************** Form ******************************
+           SizedBox(
+                  height: height * 0.05,
+                ),
           Container(
               child: Form(
             child: Column(
               children: [
                 rowForm(
-                  height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("Job title"),
-                  label2: FormHelper.isInputRequired("Years of experience",
-                      isRequired: false),
-                  widthCol1: 0.45,
-                  widthCol2: 0.35,
-                ),
-                rowForm(
-                  height: height,
-                  width: width,
-                  label1: FormHelper.isInputRequired("Education",
-                      isRequired: false),
-                  label2: FormHelper.isInputRequired("Personal Statement",
-                      isRequired: false),
-                  widthCol1: 0.35,
-                  widthCol2: 0.45,
+                  firstColumn: InputUI(
+                    width: width * 0.45,
+                    hint: FormHelper.isInputRequired("Job title"),
+                  ),
+                  SecondColumn: InputUI(
+                      width: width * 0.35,
+                      hint: FormHelper.isInputRequired("Years of experience")),
                 ),
                 SizedBox(
-                  height: height * 0.00,
+                  height: height * 0.05,
                 ),
                 rowForm(
-                  height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("Postal code"),
-                  label2: FormHelper.isInputRequired("Skills Keywords...",
-                      isRequired: false),
-                  widthCol1: 0.3,
-                  widthCol2: 0.5,
+                  firstColumn: InputUI(
+                    width: width * 0.4,
+                    hint: FormHelper.isInputRequired("Education"),
+                  ),
+                  SecondColumn: InputUI(
+                      width: width * 0.4,
+                      hint: FormHelper.isInputRequired("Postal code ")),
+                ),
+                SizedBox(
+                  height: height * 0.05,
+                ),
+                rowForm(
+                  width: width,
+                  firstColumn: InputUI(
+                    width: width * 0.6,
+                    hint: FormHelper.isInputRequired("Skills Keywords...",
+                        isRequired: false),
+                  ),
+                  SecondColumn: Text(''),
                 ),
               ],
             ),

@@ -23,40 +23,53 @@ class PersonalInfoForm extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: height * 0.03,
+          ),
           // ********************************** Form ******************************
           Container(
               child: Form(
             child: Column(
               children: [
                 rowForm(
-                  height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("First Name"),
-                  label2: FormHelper.isInputRequired("Last Name"),
-                  widthCol1: 0.4,
-                  widthCol2: 0.4,
+                  firstColumn: InputUI(
+                      width: width * 0.4,
+                      hint: FormHelper.isInputRequired("First Name")),
+                  SecondColumn: InputUI(
+                      width: width * 0.4,
+                      hint: FormHelper.isInputRequired("Last Name")),
                 ),
                 SizedBox(
-                  height: height * 0.00,
+                  height: height * 0.05,
                 ),
                 rowForm(
-                  height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("Address"),
-                  label2: FormHelper.isInputRequired("Phone"),
-                  widthCol1: 0.5,
-                  widthCol2: 0.3,
+                  firstColumn: InputUI(
+                    width: width * 0.5,
+                    hint: FormHelper.isInputRequired("Address"),
+                  ),
+                  SecondColumn: InputUI(
+                    width: width * 0.3,
+                    hint: FormHelper.isInputRequired("Phone"),
+                  ),
                 ),
                 SizedBox(
-                  height: height * 0.00,
+                  height: height * 0.05,
                 ),
                 rowForm(
-                  height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("ZIP code"),
-                  label2: FormHelper.isInputRequired("Email"),
-                  widthCol1: 0.3,
-                  widthCol2: 0.5,
+                  firstColumn: InputUI(
+                    width: width * 0.3,
+                    hint: FormHelper.isInputRequired("ZIP code"),
+                  ),
+                  SecondColumn: InputUI(
+                    width: width * 0.5,
+                    hint: FormHelper.isInputRequired("Email"),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.05,
                 ),
               ],
             ),
