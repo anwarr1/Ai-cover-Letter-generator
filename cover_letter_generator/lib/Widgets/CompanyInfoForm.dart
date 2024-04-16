@@ -3,9 +3,9 @@ import 'package:cover_letter_generator/utils/colors.dart';
 import 'package:cover_letter_generator/utils/form_helper.dart';
 import 'package:flutter/material.dart';
 
-class PersonalInfoForm extends StatelessWidget {
+class CompanyInfoForm extends StatelessWidget {
   double height, width;
-  PersonalInfoForm(this.width, this.height);
+  CompanyInfoForm(this.width, this.height);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class PersonalInfoForm extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             child: const Text(
-              "Personal Information",
+              "Company Information",
               style: TextStyle(
                 color: primaryColor,
               ),
@@ -31,33 +31,31 @@ class PersonalInfoForm extends StatelessWidget {
                 rowForm(
                   height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("First Name"),
-                  label2: FormHelper.isInputRequired("Last Name"),
+                  label1: FormHelper.isInputRequired("Company Name"),
+                  label2: FormHelper.isInputRequired("Company Address"),
                   widthCol1: 0.4,
                   widthCol2: 0.4,
                 ),
-                SizedBox(
-                  height: height * 0.00,
-                ),
+
                 rowForm(
                   height: height,
                   width: width,
-                  label1: FormHelper.isInputRequired("Address"),
-                  label2: FormHelper.isInputRequired("Phone"),
-                  widthCol1: 0.5,
-                  widthCol2: 0.3,
+                  label1:  FormHelper.isInputRequired("Department"),
+                  label2:  FormHelper.isInputRequired("Date of letter"),
+                  widthCol1: 0.45,
+                  widthCol2: 0.35,
                 ),
                 SizedBox(
                   height: height * 0.00,
                 ),
-                rowForm(
-                  height: height,
-                  width: width,
-                  label1: FormHelper.isInputRequired("ZIP code"),
-                  label2: FormHelper.isInputRequired("Email"),
-                  widthCol1: 0.3,
-                  widthCol2: 0.5,
-                ),
+                // rowForm(
+                //   height: height,
+                //   width: width,
+                //   label1: "Postal code",
+                //   label2: "Email",
+                //   widthCol1: 0.3,
+                //   widthCol2: 0.5,
+                // ),
               ],
             ),
           ))

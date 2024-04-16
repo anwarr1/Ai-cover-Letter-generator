@@ -3,5 +3,3 @@ Spring Ecosystem (Spring Rest + Spring MVC + Spring DATA + Spring Security)
 Typescript + angular
 Machine Learning + Ai 
 
-
-Oracle DB + ML + JEE tp

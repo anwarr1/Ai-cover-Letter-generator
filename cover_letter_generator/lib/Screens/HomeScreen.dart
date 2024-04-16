@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cover_letter_generator/Widgets/listLetters.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
 import 'package:cover_letter_generator/utils/custome_stepper.dart';
@@ -58,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: EdgeInsets.symmetric(
               horizontal: width * 0.08,
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -66,13 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Welcome ',
                         style: TextStyle(color: Colors.white, fontSize: 22),
                       ),
-                      Text(
-                        'Anwar Aammar! ',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      Container(
+                        margin: EdgeInsets.only(left: width * 0.08),
+                        child: const Text(
+                          'Anwar Aammar! ',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
                       ),
                     ]),
                 Spacer(),
@@ -85,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(
-            height: height * 0.03,
+            height: height * 0.02,
           ),
           Expanded(
             child: Container(
@@ -131,8 +140,8 @@ class rowForm extends StatelessWidget {
   final double width;
   final double widthCol1;
   final double widthCol2;
-  final String label1;
-  final String label2;
+  final Widget label1;
+  final Widget label2;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +161,8 @@ class rowForm extends StatelessWidget {
             ),
             SizedBox(
                 width: width * widthCol1,
-                child: FormHelper.textInput(context, (_) {}, label1)),
+                child: FormHelper.textInput(context, (_) {}, label1,
+                    isRequired: true)),
           ],
         ),
         SizedBox(
@@ -189,7 +199,7 @@ class ModalContent extends StatefulWidget {
 }
 
 class _ModalContentState extends State<ModalContent> {
-  double _bottomPadding = 0;
+  final double _bottomPadding = 0;
   int selectedPage = 0;
   PageController pageController = PageController();
 
@@ -198,22 +208,29 @@ class _ModalContentState extends State<ModalContent> {
     var height = widget.constraints.maxHeight;
     var width = widget.constraints.maxWidth;
     return Container(
-      color: primaryColor,
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          bottom: _bottomPadding + MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // ********************************** Stepper ******************************
+        color: primaryColor,
+        height: height * 1,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: _bottomPadding + MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Container(
+              color: Colors.white,
+              // height: height,
+              child: CustomStepperWidget(width, height)),
 
-            Container(
-                height: height * 0.8,
-                child: CustomStepperWidget(width, height)),
-          ],
-        ),
-      ),
-    );
+          //  Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     // ********************************** Stepper ******************************
+
+          //     Container(
+          //         color: Colors.white, child: CustomStepperWidget(width, height)),
+          //   ],
+          // ),
+          // ),
+        ));
   }
 }
+
+

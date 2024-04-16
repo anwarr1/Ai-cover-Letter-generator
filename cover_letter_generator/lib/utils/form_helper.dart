@@ -4,18 +4,15 @@ class FormHelper {
   static Widget textInput(
     BuildContext context,
     Function onChanged,
-    String hintText,
-   {
+    Widget hintText, {
     bool isTextArea = false,
     bool isNumberInput = false,
+    bool isRequired = false,
     obscureText = false,
     bool readOnly = false,
   }) {
     return TextFormField(
-      decoration: fieldDecoration(
-        context,
-        hintText,
-      ),
+      decoration: fieldDecoration(context, hintText, isRequired),
       readOnly: readOnly,
       obscureText: obscureText,
       maxLines: !isTextArea ? 1 : 3,
@@ -28,11 +25,11 @@ class FormHelper {
 
   static InputDecoration fieldDecoration(
     BuildContext context,
-    String label,
+    Widget labelWidget,
+    bool isRequired,
   ) {
     return InputDecoration(
-      labelText: label,
-      labelStyle: const TextStyle(fontSize: 13),
+      label: labelWidget,
       contentPadding: EdgeInsets.all(10),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -45,19 +42,6 @@ class FormHelper {
         borderSide: BorderSide(
           color: Color.fromARGB(255, 222, 222, 222),
           width: 1,
-        ),
-      ),
-    );
-  }
-
-  static Widget fieldLabel(String labelName) {
-    return new Padding(
-      padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
-      child: Text(
-        labelName,
-        style: new TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 15.0,
         ),
       ),
     );
@@ -140,4 +124,20 @@ class FormHelper {
   //     },
   //   );
   // }
+
+  static isInputRequired(String label, {bool isRequired = true}) {
+    return RichText(
+        text: TextSpan(children: [
+      TextSpan(
+          text: label,
+          style: const TextStyle(
+              color: Color.fromARGB(255, 123, 123, 123), fontSize: 13)),
+      isRequired
+          ? const TextSpan(
+              text: ' *',
+              style: TextStyle(color: Colors.red),
+            )
+          : TextSpan(),
+    ]));
+  }
 }
