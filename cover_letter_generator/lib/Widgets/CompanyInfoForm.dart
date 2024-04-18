@@ -45,6 +45,7 @@ class CompanyInfoForm extends StatelessWidget {
                   firstColumn: InputUI(
                     width: width * 0.4,
                     hint: FormHelper.isInputRequired("Company Name"),
+                    
                   ),
                   SecondColumn: InputUI(
                       width: width * 0.4,

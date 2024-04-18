@@ -173,10 +173,14 @@ class InputUI extends StatelessWidget {
     super.key,
     required this.width,
     required this.hint,
+    // required this.sendData,
+    required this.onChanged,
   });
 
   final double width;
   final Widget hint;
+  final Function(String) onChanged;
+  // final Function sendData;
 
   @override
   Widget build(BuildContext context) {
@@ -185,9 +189,7 @@ class InputUI extends StatelessWidget {
         child: TextFormField(
           decoration: FormHelper.fieldDecoration(context, hint),
           keyboardType: TextInputType.text,
-          onChanged: (String value) {
-            // onChanged(value);
-          },
+          onChanged: onChanged
         ));
   }
 }
