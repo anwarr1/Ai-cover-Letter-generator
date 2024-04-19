@@ -8,6 +8,7 @@ class GeneratedLetter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var data = ref.read(personalInforDataProvider);
-    return Scaffold(body: Center(child: Text("data")));
+    return Scaffold(
+        body: Center(child: Text(data.firstName + " " + data.lastName)));
   }
 }

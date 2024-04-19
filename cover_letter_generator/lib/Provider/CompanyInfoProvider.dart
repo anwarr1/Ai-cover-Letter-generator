@@ -1,16 +1,14 @@
-import 'package:cover_letter_generator/Model/Person.dart';
-import 'package:cover_letter_generator/Widgets/PersonalInfoForm.dart';
+import 'package:cover_letter_generator/Model/Company.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PersonalInfoProvider extends StateNotifier<Person> {
-  PersonalInfoProvider() : super(Person("", "", "", "", "", ""));
-  setPersonInfo(firstName, lastName, phone, address, email, zip) {
-    state =  Person(firstName, lastName, phone, address, email, zip);
-
+class CompanyInfoProvider extends StateNotifier<Company> {
+  CompanyInfoProvider() : super(Company("", "", ""));
+  setCompanyInfo({name, address, department}) {
+    state = Company(name, address, department);
   }
-
 }
 
-final personalInforDataProvider =
-    StateNotifierProvider<PersonalInfoProvider, Person>(
-        (ref) => PersonalInfoProvider());
+final companyInforDataProvider =
+    StateNotifierProvider<CompanyInfoProvider, Company>(
+        (ref) => CompanyInfoProvider());

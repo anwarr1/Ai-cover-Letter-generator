@@ -165,7 +165,7 @@ class rowFormm extends StatelessWidget {
                     isRequired: true)),
           ],
         ),
-        SizedBox(
+        SizedBox( 
           width: width * 0.02,
         ),
         Column(
