@@ -41,6 +41,11 @@ dependencies:
   easy_stepper: ^0.8.3
   another_stepper: ^1.2.2
   flutter_riverpod: ^2.4.10
+  flutter_quill: ^10.1.6
+  pdf: ^3.11.0
+  printing: ^5.12.0
+  path_provider: ^2.1.4
+  syncfusion_flutter_pdfviewer: ^26.2.11
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class stepIconBuilder extends StatelessWidget {
-  Color color;
-  Icon icon;
-  stepIconBuilder(this.color, this.icon, {super.key});
+  final Color color;
+  final Icon icon;
+  const stepIconBuilder(this.color, this.icon, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:cover_letter_generator/Widgets/listLetters.dart';
 import 'package:cover_letter_generator/utils/colors.dart';

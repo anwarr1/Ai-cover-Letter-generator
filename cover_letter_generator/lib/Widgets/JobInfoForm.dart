@@ -1,12 +1,11 @@
 import 'package:cover_letter_generator/Provider/JobInfoProvider.dart';
-import 'package:cover_letter_generator/Screens/HomeScreen.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
 import 'package:cover_letter_generator/utils/form_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class JobInfoForm extends ConsumerWidget {
-  double height, width;
+  final double height, width;
   JobInfoForm(this.width, this.height);
 
   @override
