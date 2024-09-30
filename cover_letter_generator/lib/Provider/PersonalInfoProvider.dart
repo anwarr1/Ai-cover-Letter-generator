@@ -1,5 +1,4 @@
-import 'package:cover_letter_generator/Model/Person.dart';
-import 'package:cover_letter_generator/Widgets/PersonalInfoForm.dart';
+import 'package:cover_letter_generator/model/Person.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PersonalInfoProvider extends StateNotifier<Person> {

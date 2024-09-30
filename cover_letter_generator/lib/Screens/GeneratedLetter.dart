@@ -44,10 +44,11 @@ class GeneratedLetter extends ConsumerWidget {
                   // Navigate to the PDF preview screen
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          PdfPreviewScreen(document: controller.document),
-                    ),
+                    MaterialPageRoute(builder: (context) {
+                      // var c = int.parse();
+
+                      return PdfPreviewScreen(document: controller.document);
+                    }),
                   );
                 },
                 style: TextButton.styleFrom(
@@ -92,21 +93,22 @@ class GeneratedLetter extends ConsumerWidget {
 class PdfPreviewScreen extends StatelessWidget {
   final Document document;
 
-  PdfPreviewScreen({required this.document});
+  const PdfPreviewScreen({super.key, required this.document});
 
   Future<String> _savePdf() async {
     try {
       final pdf = pw.Document();
       final delta = document.toDelta();
-
       pdf.addPage(
         pw.Page(
           build: (pw.Context context) {
             return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: delta.toList().map((op) {
                 if (op.isInsert) {
                   final text = op.data as String;
                   final style = op.attributes ?? {};
+
                   return pw.Text(
                     text,
                     style: pw.TextStyle(
@@ -124,6 +126,8 @@ class PdfPreviewScreen extends StatelessWidget {
                           : 12.0,
                     ),
                   );
+                } else if (op.isInsert) {
+                  return pw.SizedBox(height: 10); // Line break
                 }
                 return pw.SizedBox();
               }).toList(),
@@ -137,7 +141,6 @@ class PdfPreviewScreen extends StatelessWidget {
       await file.writeAsBytes(await pdf.save());
       return file.path;
     } catch (e) {
-      print("Error saving PDF: $e");
       throw Exception("Error saving PDF");
     }
   }
@@ -146,30 +149,29 @@ class PdfPreviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Preview', style: TextStyle(color: Colors.black)),
+        title: const Text('Preview', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         elevation: 1,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: FutureBuilder<String>(
         future: _savePdf(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            print("Error loading PDF: ${snapshot.error}");
-            return Center(child: Text('Error loading PDF'));
+            return const Center(child: Text('Error loading PDF'));
           } else if (snapshot.hasData) {
             return Container(
-              color: Color.fromARGB(
+              color: const Color.fromARGB(
                   255, 37, 219, 79), // Set your desired background color here
               child: SfPdfViewer.file(
                 File(snapshot.data!),
               ),
             );
           } else {
-            return Center(child: Text('No PDF to display'));
+            return const Center(child: Text('No PDF to display'));
           }
         },
       ),
@@ -182,7 +184,7 @@ class PdfPreviewScreen extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
-            backgroundColor: Colors.teal,
+            backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -192,7 +194,9 @@ class PdfPreviewScreen extends StatelessWidget {
           ),
           child: const Text(
             'Download PDF',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),

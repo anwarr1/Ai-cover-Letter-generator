@@ -1,19 +1,19 @@
-import 'package:cover_letter_generator/Screens/GeneratedLetter.dart';
+import 'package:cover_letter_generator/screens/GeneratedLetter.dart';
 import 'package:cover_letter_generator/Widgets/CompanyInfoForm.dart';
 import 'package:cover_letter_generator/Widgets/JobInfoForm.dart';
 import 'package:cover_letter_generator/Widgets/PersonalInfoForm.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
-import 'package:cover_letter_generator/utils/stepIconBuilder.dart';
+import 'package:cover_letter_generator/utils/Ui/stepIconBuilder.dart';
 import 'package:flutter/material.dart';
 
-class CustomStepperWidget extends StatefulWidget {
-  double height, width;
-  CustomStepperWidget(this.width, this.height);
+class CustomStepper extends StatefulWidget {
+  final double height, width;
+  const CustomStepper(this.width, this.height, {super.key});
   @override
   _CustomStepperWidgetState createState() => _CustomStepperWidgetState();
 }
 
-class _CustomStepperWidgetState extends State<CustomStepperWidget> {
+class _CustomStepperWidgetState extends State<CustomStepper> {
   int _currentStep = 0;
 
   StepState _getStepState(int index) {
@@ -26,6 +26,7 @@ class _CustomStepperWidgetState extends State<CustomStepperWidget> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
@@ -34,7 +35,7 @@ class _CustomStepperWidgetState extends State<CustomStepperWidget> {
               primary: Color.fromARGB(255, 169, 161, 194),
             ),
       ),
-      child: Container(
+      child: SizedBox(
         height: widget.height * 1,
         child: Column(
           children: [
@@ -89,20 +90,20 @@ class _CustomStepperWidgetState extends State<CustomStepperWidget> {
                 currentStep: _currentStep,
                 stepIconBuilder: (index, stepState) {
                   if (index < _currentStep) {
-                    return stepIconBuilder(
+                    return const stepIconBuilder(
                         Colors.green,
-                        const Icon(Icons.check,
+                        Icon(Icons.check,
                             color: Colors.white)); // completed step icon
                   } else if (index == _currentStep) {
-                    return stepIconBuilder(
+                    return const stepIconBuilder(
                         secondColor,
-                        const Icon(Icons.edit_outlined,
+                        Icon(Icons.edit_outlined,
                             size: 20,
                             color: Colors.white)); // current step icon
                   } else {
-                    return stepIconBuilder(
+                    return const stepIconBuilder(
                         Color.fromARGB(255, 175, 175, 175),
-                        const Icon(Icons.help_outline,
+                        Icon(Icons.help_outline,
                             color: Colors.white)); // disabled step icon
                   }
                 },
@@ -121,7 +122,7 @@ class _CustomStepperWidgetState extends State<CustomStepperWidget> {
     return <Step>[
       Step(
         state: _getStepState(0),
-        title: Container(
+        title: SizedBox(
           width: size.width * 0.11,
           child: const Text(
             'Step 1',
@@ -172,21 +173,15 @@ class _CustomStepperWidgetState extends State<CustomStepperWidget> {
   }
 
   onStepContinue() {
-    // print("hahona printed");
     _currentStep < 2
         ? setState(() {
             _currentStep += 1;
           })
         : Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return GeneratedLetter();
+              return const GeneratedLetter();
             },
           ));
-    //  MaterialPageRoute(
-    //     builder: (context) {
-    //       return GeneratedLetter();
-    //     },
-    //   );
   }
 
   cancel() {

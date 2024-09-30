@@ -46,84 +46,6 @@ class FormHelper {
     );
   }
 
-  // static Widget fieldLabelValue(BuildContext context, String labelName) {
-  //   return FormHelper.textInput(
-  //     context,
-  //     labelName,
-  //     (value) => {},
-  //     // onValidate: (value) {
-  //     //   return null;
-  //     // },
-  //     readOnly: true,
-  //   );
-  // }
-
-  // static Widget saveButton(String buttonText, Function onTap,
-  //     {String color, String textColor, bool fullWidth}) {
-  //   return Container(
-  //     height: 50.0,
-  //     width: 150,
-  //     child: GestureDetector(
-  //       onTap: () {
-  //         onTap();
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //           border: Border.all(
-  //             color: Color.fromARGB(255, 71, 141, 247),
-  //             style: BorderStyle.solid,
-  //             width: 1.0,
-  //           ),
-  //           color: Color.fromARGB(255, 71, 141, 247),
-  //           borderRadius: BorderRadius.circular(30.0),
-  //         ),
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: <Widget>[
-  //             Center(
-  //               child: Text(
-  //                 buttonText,
-  //                 style: TextStyle(
-  //                   color: Colors.white,
-  //                   fontSize: 16,
-  //                   fontWeight: FontWeight.w600,
-  //                   letterSpacing: 1,
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // static void showMessage(
-  //   BuildContext context,
-  //   String title,
-  //   String message,
-  //   String buttonText,
-  //   Function onPressed,
-  // ) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: new Text(title),
-  //         content: new Text(message),
-  //         actions: [
-  //           new FlatButton(
-  //             onPressed: () {
-  //               return onPressed();
-  //             },
-  //             child: new Text(buttonText),
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   static isInputRequired(String label, {bool isRequired = true}) {
     return RichText(
         text: TextSpan(children: [
@@ -136,7 +58,7 @@ class FormHelper {
               text: ' *',
               style: TextStyle(color: Colors.red),
             )
-          : TextSpan(),
+          : const TextSpan(),
     ]));
   }
 }
@@ -173,23 +95,20 @@ class InputUI extends StatelessWidget {
     super.key,
     required this.width,
     required this.hint,
-    // required this.sendData,
     required this.onChanged,
   });
 
   final double width;
   final Widget hint;
   final Function(String) onChanged;
-  // final Function sendData;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         width: width,
         child: TextFormField(
-          decoration: FormHelper.fieldDecoration(context, hint),
-          keyboardType: TextInputType.text,
-          onChanged: onChanged
-        ));
+            decoration: FormHelper.fieldDecoration(context, hint),
+            keyboardType: TextInputType.text,
+            onChanged: onChanged));
   }
 }

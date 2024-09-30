@@ -1,4 +1,4 @@
-import 'package:cover_letter_generator/Model/Job.dart';
+import 'package:cover_letter_generator/model/Job.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

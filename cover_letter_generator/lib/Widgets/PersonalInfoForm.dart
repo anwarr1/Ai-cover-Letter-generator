@@ -1,13 +1,12 @@
 import 'package:cover_letter_generator/Provider/PersonalInfoProvider.dart';
-import 'package:cover_letter_generator/Screens/HomeScreen.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
-import 'package:cover_letter_generator/utils/form_helper.dart';
+import 'package:cover_letter_generator/utils/Ui/form_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PersonalInfoForm extends ConsumerWidget {
   double height, width;
-  PersonalInfoForm(this.width, this.height);
+  PersonalInfoForm(this.width, this.height, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

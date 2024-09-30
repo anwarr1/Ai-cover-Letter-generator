@@ -1,4 +1,4 @@
-import 'package:cover_letter_generator/Model/Company.dart';
+import 'package:cover_letter_generator/model/Company.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

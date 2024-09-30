@@ -1,7 +1,6 @@
 import 'package:cover_letter_generator/Provider/CompanyInfoProvider.dart';
-import 'package:cover_letter_generator/Screens/HomeScreen.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
-import 'package:cover_letter_generator/utils/form_helper.dart';
+import 'package:cover_letter_generator/utils/Ui/form_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,4 +1,3 @@
-// ignore: file_names
 class Person {
   String firstName;
   String lastName;

@@ -1,8 +1,7 @@
-
 import 'package:cover_letter_generator/Widgets/listLetters.dart';
+import 'package:cover_letter_generator/utils/Ui/custome_stepper.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
-import 'package:cover_letter_generator/utils/custome_stepper.dart';
-import 'package:cover_letter_generator/utils/form_helper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -124,70 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class rowFormm extends StatelessWidget {
-  const rowFormm({
-    super.key,
-    required this.height,
-    required this.width,
-    required this.label1,
-    required this.label2,
-    required this.widthCol1,
-    required this.widthCol2,
-  });
-
-  final double height;
-  final double width;
-  final double widthCol1;
-  final double widthCol2;
-  final Widget label1;
-  final Widget label2;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "",
-              style:
-                  TextStyle(fontSize: 11, color: Color.fromARGB(255, 0, 0, 0)),
-            ),
-            SizedBox(
-              height: height * 0.005,
-            ),
-            SizedBox(
-                width: width * widthCol1,
-                child: FormHelper.textInput(context, (_) {}, label1,
-                    isRequired: true)),
-          ],
-        ),
-        SizedBox( 
-          width: width * 0.02,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "",
-              style:
-                  TextStyle(fontSize: 11, color: Color.fromARGB(255, 0, 0, 0)),
-            ),
-            SizedBox(
-              height: height * 0.005,
-            ),
-            SizedBox(
-                width: width * widthCol2,
-                child: FormHelper.textInput(context, (_) {}, label2)),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
 // *************************************************************** show Modal **************************************************************
 
 class ModalContent extends StatefulWidget {
@@ -216,7 +151,7 @@ class _ModalContentState extends State<ModalContent> {
           child: Container(
               color: Colors.white,
               // height: height,
-              child: CustomStepperWidget(width, height)),
+              child: CustomStepper(width, height)),
 
           //  Column(
           //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,5 +166,3 @@ class _ModalContentState extends State<ModalContent> {
         ));
   }
 }
-
-
