@@ -10,7 +10,7 @@ class Protectedroute extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAuthenticated = ref.watch(authStateProvider);
+    final isAuthenticated = ref.watch(authInfoProvider).isAuthenticated;
 
     if (isAuthenticated) {
       return child;

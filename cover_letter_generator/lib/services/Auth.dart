@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  final String apiUrl = 'http://10.0.2.2:8081/';
+  final String apiUrl = 'http://10.0.2.2:8081';
 
   Future<void> signUp(User user) async {
     final response = await http.post(
@@ -19,7 +19,6 @@ class AuthService {
         'password': user.password,
       }),
     );
-    print("Response: ${response.body}");
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       print('User signed up successfully');
@@ -44,8 +43,7 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        String token =
-            responseData['token']; // Assuming the token is in the response body
+        String token = responseData['token'];
         print("JWT Token: $token");
 
         // Store the token in SharedPreferences or another secure storage method
@@ -59,6 +57,21 @@ class AuthService {
       }
     } catch (e) {
       throw Exception('Failed to sign in user: $e');
+    }
+  }
+
+  Future<User> getCurrentUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('jwt_token')!;
+    try {
+      final response = await http.get(
+          headers: {'Authorization': "Bearer $token"},
+          Uri.parse('$apiUrl/user'));
+
+      return User.fromJson(jsonDecode(
+          response.body)); // Assuming you have a fromJson method in User class
+    } catch (e) {
+      throw Exception('Failed to get current user: $e');
     }
   }
 }

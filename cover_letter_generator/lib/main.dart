@@ -1,4 +1,5 @@
 import 'package:cover_letter_generator/Screens/Login.dart';
+import 'package:cover_letter_generator/provider/authProvider.dart';
 import 'package:cover_letter_generator/routes.dart';
 import 'package:cover_letter_generator/screens/Home.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,12 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(66, 47, 126, 1)),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: Consumer(
+        builder: (context, ref, child) {
+          final authState = ref.watch(authInfoProvider);
+          return authState.isAuthenticated ? HomeScreen() : Login();
+        },
+      ),
       routes: routes,
       builder: (context, child) {
         return child!;

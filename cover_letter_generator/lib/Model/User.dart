@@ -25,4 +25,13 @@ class User {
 
   String get getPassword => password;
   set setPassword(String password) => this.password = password;
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      email: json['email'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      password: '',
+    );
+  }
 }

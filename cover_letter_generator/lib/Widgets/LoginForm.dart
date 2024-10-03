@@ -24,6 +24,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   }
 
   bool isSignup = false;
+  bool isSubmitting = false;
   final _formKey = GlobalKey<FormState>();
   final User user =
       User(id: 0, firstName: '', lastName: '', email: '', password: '');
@@ -92,32 +93,47 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 width: width * 0.65,
                 child: ElevatedButton(
                   onPressed: () async {
+                    setState(() {
+                      isSubmitting = true;
+                    });
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
 
                       try {
                         isSignup
                             ? await authService.signUp(user)
-                            : await login(context, user, authService, ref);
+                            : await ref
+                                .read(authInfoProvider.notifier)
+                                .login(context, user, authService);
 
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text(isSignup
                                   ? 'Sign Up Successful'
                                   : 'Login Successful')),
                         );
+                        setState(() {
+                          isSubmitting = false;
+                        });
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const HomeScreen()),
                         );
                       } catch (e) {
+                        setState(() {
+                          isSubmitting = false;
+                        });
+                        print('Error login: $e');
+
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Error: $e')),
                         );
                       }
+                      setState(() {
+                        isSubmitting = false;
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -128,10 +144,15 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  child: Text(
-                    isSignup ? 'Sign Up' : 'Login',
-                    style: const TextStyle(color: Colors.white),
-                  ),
+                  child: isSubmitting
+                      ? const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : Text(
+                          isSignup ? 'Sign Up' : "Login",
+                          style: const TextStyle(color: Colors.white),
+                        ),
                 ),
               ),
               SizedBox(height: height * 0.01),

@@ -6,62 +6,80 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final authStateProvider = StateProvider<bool>((ref) {
-  return false; // Default to not authenticated
-});
-
-Future<void> checkAuthentication(WidgetRef ref) async {
-  final prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('jwt_token');
-
-  if (token != null && token.isNotEmpty) {
-    ref.read(authStateProvider.notifier).state = true;
-  } else {
-    ref.read(authStateProvider.notifier).state = false;
-  }
+class AuthState {
+  bool isAuthenticated = false;
+  User currentUser =
+      User(id: 0, email: '', password: '', firstName: '', lastName: '');
+  AuthState({required this.isAuthenticated, required this.currentUser});
 }
 
-Future<void> login(
-  BuildContext context,
-  User user,
-  AuthService authService,
-  WidgetRef ref,
-) async {
-  try {
-    var token = await authService.signIn(user);
+class AuthProvider extends StateNotifier<AuthState> {
+  AuthProvider()
+      : super(AuthState(
+            isAuthenticated: false,
+            currentUser: User(
+                id: 0, email: '', password: '', firstName: '', lastName: ''))) {
+    _initializeAuthState();
+  }
 
-    if (token.isNotEmpty) {
-      ref.read(authStateProvider.notifier).state = true;
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', token);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login Successful')),
-      );
+  Future<void> _initializeAuthState() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('jwt_token');
 
-      // Navigate to the HomeScreen after successful login
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
+    if (token != null && token.isNotEmpty) {
+      state = AuthState(isAuthenticated: true, currentUser: state.currentUser);
     } else {
-      throw Exception('Invalid token received');
+      state = AuthState(
+          isAuthenticated: false,
+          currentUser: User(
+              id: 0, email: '', password: '', firstName: '', lastName: ''));
     }
-  } catch (e) {
-    // Display error message on failure
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error: $e')),
-    );
+  }
+
+  Future<void> login(
+    BuildContext context,
+    User user,
+    AuthService authService,
+  ) async {
+    try {
+      var token = await authService.signIn(user);
+
+      if (token.isNotEmpty) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwt_token', token);
+        state = AuthState(
+            isAuthenticated: true,
+            currentUser: await authService.getCurrentUser());
+      } else {
+        throw Exception('Invalid token received');
+      }
+    } catch (e) {
+      throw Exception('Login failed: $e');
+    }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('jwt_token');
+    state = AuthState(
+        isAuthenticated: false,
+        currentUser:
+            User(id: 0, email: '', password: '', firstName: '', lastName: ''));
   }
 }
+
+// Future<void> checkAuthentication(WidgetRef ref) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   String? token = prefs.getString('jwt_token');
+
+//   if (token != null && token.isNotEmpty) {
+//     ref.read(authStateProvider.notifier).state = true;
+//   } else {
+//     ref.read(authStateProvider.notifier).state = false;
+//   }
+// }
 
 // Logout function to clear the token and update auth state
-Future<void> logout(BuildContext context, WidgetRef ref) async {
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.remove('jwt_token');
-  ref.read(authStateProvider.notifier).state = false;
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const Login()),
-  );
-}
+
+final authInfoProvider =
+    StateNotifierProvider<AuthProvider, AuthState>((ref) => AuthProvider());
