@@ -12,29 +12,38 @@ class Login extends StatelessWidget {
     final width = mediaQuery.size.width;
     final height = mediaQuery.size.height;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: height * 0.02),
-            const Text(
-              "Login",
-              style: TextStyle(fontSize: 22, color: primaryColor),
-            ),
-            SizedBox(height: height * 0.04),
-            SvgPicture.asset(
-              "assets/job_hunt.svg",
-              height: height * 0.25,
-              width: width * 0.9,
-            ),
-            SizedBox(height: height * 0.03),
-            const Flexible(
-              child: SingleChildScrollView(
-                child: LoginForm(),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                child: const Text("Home"),
               ),
-            ),
-          ],
+              SizedBox(height: height * 0.02),
+              const Text(
+                "Login",
+                style: TextStyle(fontSize: 22, color: primaryColor),
+              ),
+              SizedBox(height: height * 0.04),
+              SvgPicture.asset(
+                "assets/job_hunt.svg",
+                height: height * 0.25,
+                width: width * 0.9,
+              ),
+              SizedBox(height: height * 0.03),
+              const Flexible(
+                child: SingleChildScrollView(
+                  child: LoginForm(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

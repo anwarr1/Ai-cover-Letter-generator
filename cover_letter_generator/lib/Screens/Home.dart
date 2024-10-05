@@ -1,7 +1,7 @@
 import 'package:cover_letter_generator/Widgets/listLetters.dart';
 import 'package:cover_letter_generator/model/User.dart';
 import 'package:cover_letter_generator/provider/authProvider.dart';
-import 'package:cover_letter_generator/screens/Login.dart';
+
 import 'package:cover_letter_generator/utils/Ui/custome_stepper.dart';
 import 'package:cover_letter_generator/utils/colors.dart';
 
@@ -24,6 +24,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     var width = size.width;
     var height = size.height;
     User currentUser = ref.read(authInfoProvider).currentUser;
+    print("Current user" + currentUser.firstName);
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -61,7 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/login');
                 // Navigate to Settings Screen
               },
             ),
@@ -70,10 +71,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               title: const Text('Logout'),
               onTap: () async {
                 await ref.read(authInfoProvider.notifier).logout(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Login()),
-                );
+                Navigator.pushNamed(context, '/home');
               },
             ),
           ],

@@ -34,4 +34,23 @@ class User {
       password: '',
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'password': password,
+      'firstName': firstName,
+      'lastName': lastName,
+    };
+  }
+
+  static User makeEmpty() {
+    return User(
+      id: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    );
+  }
 }

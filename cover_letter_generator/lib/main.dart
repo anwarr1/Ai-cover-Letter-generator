@@ -1,3 +1,4 @@
+import 'package:cover_letter_generator/Screens/GeneratedLetter.dart';
 import 'package:cover_letter_generator/Screens/Login.dart';
 import 'package:cover_letter_generator/provider/authProvider.dart';
 import 'package:cover_letter_generator/routes.dart';
@@ -25,7 +26,12 @@ class MyApp extends StatelessWidget {
       home: Consumer(
         builder: (context, ref, child) {
           final authState = ref.watch(authInfoProvider);
-          return authState.isAuthenticated ? HomeScreen() : Login();
+          if (authState.isLoading) {
+            return const Center(
+                child:
+                    CircularProgressIndicator()); // Show a loading indicator while checking authentication
+          }
+          return authState.isAuthenticated ? const HomeScreen() : const Login();
         },
       ),
       routes: routes,

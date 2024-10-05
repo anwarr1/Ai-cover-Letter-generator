@@ -26,8 +26,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   bool isSignup = false;
   bool isSubmitting = false;
   final _formKey = GlobalKey<FormState>();
-  final User user =
-      User(id: 0, firstName: '', lastName: '', email: '', password: '');
+  final User user = User.makeEmpty();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +105,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                                 .read(authInfoProvider.notifier)
                                 .login(context, user, authService);
 
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text(isSignup
@@ -124,7 +124,6 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                         setState(() {
                           isSubmitting = false;
                         });
-                        print('Error login: $e');
 
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
                         ScaffoldMessenger.of(context).showSnackBar(

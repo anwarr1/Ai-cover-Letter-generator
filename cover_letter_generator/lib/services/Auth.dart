@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  final String apiUrl = 'http://10.0.2.2:8081';
+  final String apiUrl = 'http://192.168.11.120:8081';
 
   Future<void> signUp(User user) async {
     final response = await http.post(
@@ -20,8 +20,6 @@ class AuthService {
       }),
     );
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      print('User signed up successfully');
     } else {
       // If the server did not return a 200 OK response, throw an exception.
       throw Exception('Failed to sign up user');
@@ -67,9 +65,8 @@ class AuthService {
       final response = await http.get(
           headers: {'Authorization': "Bearer $token"},
           Uri.parse('$apiUrl/user'));
-
-      return User.fromJson(jsonDecode(
-          response.body)); // Assuming you have a fromJson method in User class
+      User user = User.fromJson(jsonDecode(response.body));
+      return user; // Assuming you have a fromJson method in User class
     } catch (e) {
       throw Exception('Failed to get current user: $e');
     }
